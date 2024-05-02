@@ -1,10 +1,11 @@
 name: Staging and Production Deployment
-on:
-  push:
-    branches:
-      - "release/*"
-    paths:
-      - "**"
+# on:
+#   push:
+#     branches:
+#       - "release/*"
+#     paths:
+#       - "**"
+on: push
 
 jobs:
   check-commits-merged:
