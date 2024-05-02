@@ -1,0 +1,40 @@
+name: Staging and Production Deployment
+on:
+  push:
+    branches:
+      - "release/*"
+    paths:
+      - "**"
+
+jobs:
+  check-commits-merged:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify all commits are in master
+        run: |
+          # Update local tracking of the remote branches
+          git fetch --prune
+
+          # Check if all commits on the current branch are also in master
+          if git log master..HEAD; then
+            echo "There are commits on this branch that are not in master."
+            exit 1
+          else
+            echo "All commits on this branch are included in master."
+          fi
+
+  check-branch-name-and-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 #
+
+      - name: Check Branch Name and Version Increment
+        run: python .github/scripts/check_version.py
