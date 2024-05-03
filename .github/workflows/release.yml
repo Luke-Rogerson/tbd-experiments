@@ -4,6 +4,9 @@ on:
     branches: ["release/*"]
     paths:
       - "**"
+  create:
+    branches:
+      - "release/*"
 
 jobs:
   check-commits-merged:
