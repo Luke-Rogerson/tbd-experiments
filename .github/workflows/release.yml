@@ -5,8 +5,9 @@ on:
     paths:
       - "**"
   create:
-    branches:
-      - "release/*"
+    branches: ["release/*"]
+    paths:
+      - "**"
 
 jobs:
   check-commits-merged:
@@ -16,6 +17,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ github.head_ref }} # Explicitly reference the head ref
 
       - name: Verify all commits are in master
         run: |
